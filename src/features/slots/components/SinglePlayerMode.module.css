@@ -1,0 +1,77 @@
+.container { display: flex; flex-direction: column; gap: 2rem; }
+
+.searchSection { position: relative; max-width: 500px; margin: 0 auto; width: 100%; }
+
+.searchBar {
+  display: flex; align-items: center; gap: 1rem;
+  background: rgba(255,255,255,0.05); padding: 1rem;
+  border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+}
+
+.searchBar input { background: transparent; border: none; color: white; width: 100%; outline: none; }
+
+.dropdown {
+  position: absolute; top: 110%; left: 0; right: 0;
+  background: #1e293b; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1);
+  z-index: 100; max-height: 300px; overflow-y: auto;
+}
+
+.dropItem {
+  display: flex; align-items: center; gap: 1rem; padding: 0.75rem;
+  cursor: pointer; transition: background 0.2s;
+}
+
+.dropItem:hover { background: rgba(56, 189, 248, 0.1); }
+.dropItem img { width: 40px; height: 40px; border-radius: 6px; object-fit: cover; }
+
+.gameGrid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  background: rgba(255,255,255,0.02); padding: 2rem; border-radius: 20px;
+}
+
+.slotHeader { display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem; }
+.slotHeader img { width: 80px; height: 80px; border-radius: 12px; box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
+
+.inputGroup { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.5rem; }
+.inputGroup label { font-size: 0.8rem; color: #94a3b8; font-weight: bold; }
+.inputGroup input {
+  background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1);
+  padding: 1rem; border-radius: 8px; color: white; font-size: 1.2rem;
+}
+
+.superToggle {
+  width: 100%; padding: 0.75rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1);
+  background: transparent; color: #64748b; font-weight: bold; margin-bottom: 1rem;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+}
+
+.superToggle.active { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: #38bdf8; }
+
+.saveBtn {
+  width: 100%; padding: 1.2rem; border-radius: 12px; border: none;
+  background: #00ff88; color: #064e3b; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+}
+
+/* Stats Panel */
+.statsPanel { display: flex; flex-direction: column; gap: 1rem; }
+
+.statCard {
+  background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 12px;
+  display: flex; align-items: center; gap: 1.5rem;
+}
+
+.statInfo { display: flex; flex-direction: column; }
+.label { font-size: 0.7rem; color: #64748b; letter-spacing: 1px; font-weight: 800; }
+.value { font-size: 1.5rem; font-weight: bold; font-family: 'JetBrains Mono', monospace; }
+
+.avgBox {
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(168, 85, 247, 0.1));
+  padding: 2rem; border-radius: 12px; text-align: center; margin-top: auto;
+}
+
+.avgValue { font-size: 3rem; font-weight: 900; color: white; margin: 0.5rem 0; }
+.avgBox p { font-size: 0.8rem; color: #94a3b8; margin: 0; }
+
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

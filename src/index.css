@@ -1,0 +1,29 @@
+:root {
+    font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    background-color: #0f172a; /* Azul marinho muito escuro */
+    color: #f8fafc;
+  }
+  
+  body {
+    margin: 0;
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  #root {
+    width: 100%;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  button {
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

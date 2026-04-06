@@ -1,0 +1,59 @@
+.container {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 0 auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    color: #38bdf8;
+  }
+  
+  .header h2 { margin: 0; font-size: 1.5rem; }
+  
+  .spinIcon { animation: spin 4s linear infinite; }
+  
+  .form { display: flex; flex-direction: column; gap: 1.5rem; }
+  
+  .inputGroup { display: flex; flex-direction: column; gap: 0.5rem; }
+  .inputGroup label { font-size: 0.85rem; color: #94a3b8; font-weight: 600; }
+  
+  .inputGroup input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  .priceInput { position: relative; display: flex; align-items: center; }
+  .priceInput svg { position: absolute; left: 1rem; color: #00ff88; }
+  .priceInput input { padding-left: 2.8rem; width: 100%; }
+  
+  .submitBtn {
+    background: #0ea5e9;
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 1rem;
+    margin-top: 1rem;
+  }
+  
+  .spin { animation: spin 1s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

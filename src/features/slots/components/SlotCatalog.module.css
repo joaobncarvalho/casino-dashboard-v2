@@ -1,0 +1,77 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .searchBar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem 1.5rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .searchBar input {
+    background: transparent;
+    border: none;
+    color: white;
+    outline: none;
+    width: 100%;
+    font-size: 1rem;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .slotCard {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s;
+  }
+  
+  .slotCard:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.07);
+  }
+  
+  .imageWrapper {
+    position: relative;
+    aspect-ratio: 1/1;
+  }
+  
+  .imageWrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .rtpBadge {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #00ff88;
+  }
+  
+  .slotInfo {
+    padding: 1rem;
+  }
+  
+  .slotInfo h4 { margin: 0; font-size: 0.9rem; }
+  .slotInfo p { margin: 4px 0 0; font-size: 0.75rem; color: #94a3b8; }
+  
+  .loader { display: flex; justify-content: center; padding: 4rem; color: #38bdf8; }
+  .spin { animation: spin 1s linear infinite; }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

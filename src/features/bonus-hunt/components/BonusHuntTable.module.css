@@ -1,0 +1,71 @@
+.wrapper {
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden;
+  }
+  
+  .huntHeader {
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .beInfo {
+    display: flex;
+    gap: 2rem;
+    font-size: 0.9rem;
+  }
+  
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+  }
+  
+  .table th {
+    padding: 1rem 1.5rem;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #64748b;
+    letter-spacing: 1px;
+  }
+  
+  .table td {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  }
+  
+  .slotCell {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 500;
+  }
+  
+  .slotCell img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+  
+  .table input {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+    width: 100px;
+  }
+  
+  .winValue {
+    color: #00ff88;
+    font-weight: bold;
+  }
+  
+  .collectedRow {
+    background: rgba(0, 255, 136, 0.02);
+  }
+  
+  .noHunt { padding: 4rem; text-align: center; color: #64748b; }

@@ -1,0 +1,49 @@
+.list { display: flex; flex-direction: column; gap: 1rem; max-width: 900px; margin: 0 auto; }
+
+.sessionCard {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s;
+}
+
+.sessionCard:hover {
+  transform: scale(1.01);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.cardMain {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.dateRow {
+  display: flex; align-items: center; gap: 0.5rem;
+  color: #64748b; font-size: 0.8rem; margin-bottom: 0.5rem;
+}
+
+.info h3 { margin: 0; font-size: 1.25rem; color: #f8fafc; }
+
+.pnlBadge {
+  display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem; border-radius: 50px; font-weight: 800; font-size: 1.1rem;
+}
+
+.profit { background: rgba(0, 255, 136, 0.1); color: #00ff88; border: 1px solid rgba(0, 255, 136, 0.2); }
+.loss { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); }
+
+.detailsGrid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  padding-top: 1rem; border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.detail { display: flex; flex-direction: column; gap: 0.25rem; }
+.label { font-size: 0.65rem; color: #64748b; font-weight: 900; letter-spacing: 1px; }
+.val { font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+.center { display: flex; justify-content: center; padding: 4rem; }
+.emptyState { text-align: center; padding: 4rem; color: #64748b; }
+.spin { animation: spin 1s linear infinite; color: #38bdf8; }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

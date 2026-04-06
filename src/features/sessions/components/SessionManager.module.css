@@ -1,0 +1,96 @@
+.activeContainer {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  .liveBadge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: #ff4d4d;
+    animation: pulse 2s infinite;
+  }
+  
+  .sessionTitle {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #e2e8f0;
+  }
+  
+  .balanceInfo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #00ff88;
+    font-weight: bold;
+  }
+  
+  .iconBlue { color: #38bdf8; }
+  
+  .stopBtn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  
+  .stopBtn:hover {
+    background: #ef4444;
+    color: white;
+  }
+  
+  /* Setup Card */
+  .setupCard {
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+  }
+  
+  .setupTitle { color: #38bdf8; margin-top: 0; margin-bottom: 1.5rem; text-align: center; }
+  
+  .inputGroup { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1rem; }
+  .inputGroup label { font-size: 0.8rem; color: #94a3b8; }
+  .inputGroup input {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 0.8rem;
+    border-radius: 8px;
+    color: white;
+    outline: none;
+  }
+  .inputGroup input:focus { border-color: #38bdf8; }
+  
+  .startBtn {
+    width: 100%;
+    padding: 1rem;
+    background: #0284c7;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+  
+  .spin { animation: spin 1s linear infinite; }
+  
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
