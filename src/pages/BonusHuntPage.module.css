@@ -1,0 +1,170 @@
+/* =========================================
+   CONTAINER E CABEÇALHO
+   ========================================= */
+   .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.4s ease-out;
+  }
+  
+  .header {
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    color: #f8fafc;
+    letter-spacing: -1px;
+  }
+  
+  .subtitle {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .adderWrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem;
+  }
+  
+  /* =========================================
+     PAINEL DE CONTROLO INTELIGENTE
+     ========================================= */
+  .controlPanel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1e293b;
+    padding: 1.25rem 2rem;
+    border-radius: 12px;
+    border: 1px solid #334155;
+    margin: 2rem 0 1rem 0;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .panelInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .panelTitle {
+    margin: 0;
+    color: #f8fafc;
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+  
+  .panelSubtitle {
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.95rem;
+  }
+  
+  /* =========================================
+     BOTÕES E ESTADOS
+     ========================================= */
+  .btnStart {
+    background-color: #fbbf24;
+    color: #0f172a;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 14px 0 rgba(251, 191, 36, 0.2);
+  }
+  
+  .btnStart:hover:not(:disabled) {
+    background-color: #f59e0b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+  }
+  
+  .btnStart:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  .btnStart:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .lockStatus {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fbbf24;
+    font-weight: 700;
+    background-color: rgba(251, 191, 36, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px dashed rgba(251, 191, 36, 0.3);
+  }
+  
+  .btnFinish {
+    background-color: #10b981;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+    font-weight: 700;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+    transition: all 0.2s ease;
+  }
+  
+  .btnFinish:hover:not(:disabled) {
+    background-color: #059669;
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+    transform: translateY(-2px);
+  }
+  
+  .btnFinish:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  .btnFinish:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  /* =========================================
+     ANIMAÇÕES E RESPONSIVIDADE
+     ========================================= */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @media (max-width: 768px) {
+    .controlPanel {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+    
+    .btnStart, .btnFinish, .lockStatus {
+      width: 100%;
+      justify-content: center;
+    }
+  }

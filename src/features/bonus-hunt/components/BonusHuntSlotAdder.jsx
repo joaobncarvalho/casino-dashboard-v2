@@ -4,7 +4,7 @@ import { useActiveHunt } from '../hooks/useActiveHunt';
 import { Search, Plus, Loader2, X, Lock } from 'lucide-react';
 import styles from './BonusHuntSlotAdder.module.css';
 
-export default function BonusHuntSlotAdder() {
+export default function BonusHuntSlotAdder({ onSelectSlot }) {
   const [query, setQuery] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef(null);
@@ -20,7 +20,6 @@ export default function BonusHuntSlotAdder() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  // 🛑 UI LOCK: Se não for OPEN, mostra mensagem de bloqueio
   if (hunt && hunt.status !== "OPEN") {
     return (
       <div className={styles.lockedContainer}>
@@ -33,24 +32,16 @@ export default function BonusHuntSlotAdder() {
     ? slots?.filter(s => s.name.toLowerCase().includes(query.toLowerCase()))
     : [];
 
-  const handleAdd = (slot) => {
-    if (!hunt) return;
-    
-    // Captura os dados dinamicamente
-    const bet = window.prompt(`Valor da aposta para ${slot.name}:`, "0.20");
-    if (!bet || isNaN(parseFloat(bet))) return;
-    
-    const isSuper = window.confirm("Este é um SUPER Bónus?");
-
-    // Passa os dados exatos para o hook
-    addSlot({ ...slot, superMode: isSuper }, bet);
-    setQuery("");
-    setIsOpen(false);
-  };
+    const handleAdd = (slot) => {
+      if (!hunt) return;
+      
+      onSelectSlot(slot); // Em vez de adicionar, abre o modal!
+      setQuery("");
+      setIsOpen(false);
+    };
 
   return (
     <div className={styles.container} ref={containerRef}>
-      {/* ... (mantém todo o JSX do input de pesquisa exatamente igual) ... */}
       <div className={styles.searchWrapper}>
         <Search size={18} className={styles.searchIcon} />
         <input 

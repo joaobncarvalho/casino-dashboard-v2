@@ -9,12 +9,11 @@ export function useCreateHunt() {
   return useMutation({
     mutationFn: (data) => api.post('/bonus-hunt', {
       ...data,
-      sessionId: activeSession.id // Vínculo obrigatório v2.0
+      sessionId: activeSession?.id // 🛑 Previne undefined crash
     }),
     onSuccess: () => {
-      // Forçamos o refresh da hunt ativa para a tabela aparecer
-      queryClient.invalidateQueries(['active-hunt']);
-      queryClient.invalidateQueries(['live-stats']);
+      queryClient.invalidateQueries({ queryKey: ['active-hunt'] });
+      queryClient.invalidateQueries({ queryKey: ['live-stats'] });
     }
   });
 }
