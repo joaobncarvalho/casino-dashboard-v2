@@ -20,25 +20,6 @@ export function useActiveHunt() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['active-hunt'] })
   });
 
-  // --- ADICIONA ESTA MUTAÇÃO AO TEU HOOK ---
-  const finishHuntMutation = useMutation({
-    mutationFn: (huntId) => api.put(`/bonus-hunt/${huntId}/finish`),
-    onSuccess: () => {
-      // Invalida para que o componente volte ao estado inicial (BonusHuntForm)
-      queryClient.invalidateQueries({ queryKey: ['active-hunt'] });
-      queryClient.invalidateQueries({ queryKey: ['live-stats'] });
-    }
-  });
-
-  return {
-    // ... tudo o que já tinhas ...
-    finishHunt: () => {
-      const id = hunt?.id || hunt?._id;
-      if (id) finishHuntMutation.mutate(id);
-    },
-    isFinishing: finishHuntMutation.isPending
-  };
-
   // 3. Mutação: Atualizar Aposta na Tabela
   const updateBetMutation = useMutation({
     mutationFn: ({ huntId, slotName, bet }) => 
@@ -54,7 +35,6 @@ export function useActiveHunt() {
 
   // 5. Mutação: Coletar Prémio (Quando o Streamer digita o resultado)
   const collectWinMutation = useMutation({
-    // Adapta a rota abaixo se o teu Java estiver à espera de um formato diferente
     mutationFn: ({ huntId, slotName, amount }) => 
       api.put(`/bonus-hunt/${huntId}/slots/${slotName}/collect`, { winAmount: amount }),
     onSuccess: () => {
@@ -63,7 +43,17 @@ export function useActiveHunt() {
     }
   });
 
-  // 🚀 O RETORNO: Tudo o que as tuas páginas podem usar
+  // 🔥 6. Mutação: Finalizar a Bonus Hunt (NOVO) 🔥
+  const finishHuntMutation = useMutation({
+    mutationFn: (huntId) => api.put(`/bonus-hunt/${huntId}/finish`),
+    onSuccess: () => {
+      // Invalida para que o componente volte ao estado inicial (BonusHuntForm)
+      queryClient.invalidateQueries({ queryKey: ['active-hunt'] });
+      queryClient.invalidateQueries({ queryKey: ['live-stats'] });
+    }
+  });
+
+  // 🚀 O ÚNICO RETORNO: Tudo o que as tuas páginas podem usar
   return {
     hunt,
     isLoading,
@@ -92,7 +82,7 @@ export function useActiveHunt() {
       if (id) updateBetMutation.mutate({ huntId: id, slotName, bet });
     },
 
-    // Método: Trancar a lista e começar a abrir!
+    // Método: Trancar a lista e começar a abrir
     startOpening: () => {
       const id = hunt?.id || hunt?._id;
       if (id) startOpeningMutation.mutate(id);
@@ -103,7 +93,14 @@ export function useActiveHunt() {
       collectWinMutation.mutate({ huntId, slotName, amount });
     },
 
+    // 🔥 Método: Terminar a Hunt Oficialmente (NOVO) 🔥
+    finishHunt: () => {
+      const id = hunt?.id || hunt?._id;
+      if (id) finishHuntMutation.mutate(id);
+    },
+
     // Estados de loading para UI
-    isStarting: startOpeningMutation.isPending
+    isStarting: startOpeningMutation.isPending,
+    isFinishing: finishHuntMutation.isPending // 🔥 NOVO 🔥
   };
 }
