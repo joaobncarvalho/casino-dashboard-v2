@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useSlots } from '../../slots/hooks/useSlots';
 import { useActiveHunt } from '../hooks/useActiveHunt';
-import { Search, Plus, Loader2, X } from 'lucide-react';
+import { Search, Plus, Loader2, X, Lock } from 'lucide-react';
 import styles from './BonusHuntSlotAdder.module.css';
 
 export default function BonusHuntSlotAdder() {
@@ -12,16 +12,22 @@ export default function BonusHuntSlotAdder() {
   const { data: slots, isLoading } = useSlots();
   const { hunt, addSlot } = useActiveHunt();
 
-  // Fecha a lista ao clicar fora
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setIsOpen(false);
-      }
+      if (containerRef.current && !containerRef.current.contains(e.target)) setIsOpen(false);
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  // 🛑 UI LOCK: Se não for OPEN, mostra mensagem de bloqueio
+  if (hunt && hunt.status !== "OPEN") {
+    return (
+      <div className={styles.lockedContainer}>
+        <Lock size={18} /> Adição de slots bloqueada (Fase de Coleta)
+      </div>
+    );
+  }
 
   const filteredSlots = query.length > 1 
     ? slots?.filter(s => s.name.toLowerCase().includes(query.toLowerCase()))
@@ -30,21 +36,21 @@ export default function BonusHuntSlotAdder() {
   const handleAdd = (slot) => {
     if (!hunt) return;
     
-    // Preparar o objeto para a API v2.0
-    const slotData = {
-      slotName: slot.name,
-      betSize: 0, // O streamer define depois na tabela
-      imageUrl: slot.imageUrl,
-      theoreticalRtp: slot.theoreticalRtp
-    };
+    // Captura os dados dinamicamente
+    const bet = window.prompt(`Valor da aposta para ${slot.name}:`, "0.20");
+    if (!bet || isNaN(parseFloat(bet))) return;
+    
+    const isSuper = window.confirm("Este é um SUPER Bónus?");
 
-    addSlot({ huntId: hunt.id, slot: slotData });
+    // Passa os dados exatos para o hook
+    addSlot({ ...slot, superMode: isSuper }, bet);
     setQuery("");
     setIsOpen(false);
   };
 
   return (
     <div className={styles.container} ref={containerRef}>
+      {/* ... (mantém todo o JSX do input de pesquisa exatamente igual) ... */}
       <div className={styles.searchWrapper}>
         <Search size={18} className={styles.searchIcon} />
         <input 

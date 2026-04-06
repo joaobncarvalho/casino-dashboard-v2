@@ -1,54 +1,59 @@
 import { useActiveHunt } from '../hooks/useActiveHunt';
-import { CheckCircle2, Circle, DollarSign, Calculator } from 'lucide-react';
+import { CheckCircle2, Circle, Calculator, Activity } from 'lucide-react'; 
 import styles from './BonusHuntTable.module.css';
 
 export default function BonusHuntTable() {
-  const { hunt, collectWin } = useActiveHunt();
+  const { hunt, updateBet, collectWin } = useActiveHunt();
+  if (!hunt) return null;
 
-  if (!hunt) return <div className={styles.noHunt}>Nenhuma Bonus Hunt ativa. Cria uma para começar!</div>;
+  const isEditable = hunt.status === 'OPEN';
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.huntHeader}>
-        <div className={styles.beInfo}>
-          <span><Calculator size={16}/> BE Inicial: <strong>{hunt.initialBreakEven?.toFixed(2)}x</strong></span>
-          <span><Activity size={16}/> BE Atual: <strong>{hunt.currentBreakEven?.toFixed(2)}x</strong></span>
-        </div>
-      </div>
-
+      {/* ... header ... */}
       <table className={styles.table}>
         <thead>
           <tr>
             <th>Slot</th>
             <th>Aposta</th>
             <th>Prémio</th>
-            <th>Multiplicador</th>
             <th>Status</th>
           </tr>
         </thead>
         <tbody>
-          {hunt.slots.map((s, index) => (
-            <tr key={index} className={s.collected ? styles.collectedRow : ''}>
+          {(hunt.slots ?? []).map((s, index) => (
+            <tr key={index}>
               <td className={styles.slotCell}>
-                <img src={s.imageUrl} alt="" />
-                {s.slotName}
+                <img src={s.imageUrl} alt="" /> {s.name}
               </td>
-              <td>${s.betSize.toFixed(2)}</td>
+              
+              {/* COLUNA APOSTA: Editável se OPEN, Texto se COLLECTING */}
               <td>
-                {s.collected ? (
-                  <span className={styles.winValue}>${s.winAmount.toFixed(2)}</span>
-                ) : (
+                {isEditable ? (
                   <input 
-                    type="number" 
-                    placeholder="0.00"
-                    onBlur={(e) => collectWin({ huntId: hunt.id, slotName: s.slotName, amount: e.target.value })}
+                    type="number"
+                    step="0.10"
+                    defaultValue={s.bet}
+                    className={styles.inlineInput}
+                    onBlur={(e) => updateBet(s.name, parseFloat(e.target.value))}
                   />
+                ) : (
+                  <span>${s.bet.toFixed(2)}</span>
                 )}
               </td>
-              <td>{(s.winAmount / s.betSize).toFixed(1)}x</td>
+
               <td>
-                {s.collected ? <CheckCircle2 color="#00ff88" /> : <Circle color="#64748b" />}
+                {!isEditable ? (
+                  <input 
+                    type="number"
+                    placeholder="0.00"
+                    onBlur={(e) => collectWin({ huntId: hunt.id, slotName: s.name, amount: parseFloat(e.target.value) })}
+                  />
+                ) : (
+                  <span className={styles.muted}>Aguardando abertura...</span>
+                )}
               </td>
+              {/* ... status ... */}
             </tr>
           ))}
         </tbody>

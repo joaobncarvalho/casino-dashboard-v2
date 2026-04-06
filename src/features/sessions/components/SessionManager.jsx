@@ -1,40 +1,49 @@
 import { useState } from 'react';
-import { useSession } from '../../../context/SessionContext';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import api from '../../../api/client';
 import { Play, Square, Wallet, Loader2 } from 'lucide-react';
 import styles from './SessionManager.module.css';
 
 export default function SessionManager() {
-  const { activeSession, refreshSession } = useSession();
   const queryClient = useQueryClient();
   
-  // Estados locais para o formulário
   const [title, setTitle] = useState("");
   const [initialBalance, setInitialBalance] = useState("");
 
-  // Mutação: Iniciar Sessão
+  // 🛑 TRAVA SNIPER: Busca a sessão de forma segura, ignorando o Contexto avariado
+  const { data: activeSession, isLoading: isChecking } = useQuery({
+    queryKey: ['active-session'],
+    queryFn: async () => {
+      const res = await api.get('/sessions/active');
+      // Se não houver conteúdo (204) ou vier vazio, forçamos null!
+      if (res.status === 204 || !res.data || Object.keys(res.data).length === 0) {
+        return null;
+      }
+      return res.data;
+    }
+  });
+
   const startMutation = useMutation({
     mutationFn: (data) => api.post('/sessions', data),
     onSuccess: () => {
-      queryClient.invalidateQueries(['active-session']);
-      refreshSession();
+      queryClient.invalidateQueries({ queryKey: ['active-session'] });
       setTitle("");
       setInitialBalance("");
     }
   });
 
-  // Mutação: Encerrar Sessão
   const stopMutation = useMutation({
-    mutationFn: () => api.put('/sessions/active/end'),
+    mutationFn: (finalData) => api.put('/sessions/active/end', finalData),
     onSuccess: () => {
-      queryClient.invalidateQueries(['active-session']);
-      queryClient.setQueryData(['active-session'], null);
-      refreshSession();
+      queryClient.invalidateQueries({ queryKey: ['active-session'] });
+      queryClient.invalidateQueries({ queryKey: ['live-stats'] });
+      queryClient.invalidateQueries({ queryKey: ['session-history'] }); // Atualiza o histórico
     }
   });
 
-  // Estado: Sessão Ativa
+  if (isChecking) return <div className={styles.setupCard}><Loader2 className={styles.spin} /></div>;
+
+  // Se o activeSession for REALMENTE verdadeiro, mostra o painel LIVE
   if (activeSession) {
     return (
       <div className={styles.activeContainer}>
@@ -45,11 +54,15 @@ export default function SessionManager() {
         
         <div className={styles.balanceInfo}>
           <Wallet size={16} className={styles.iconBlue} />
-          <span>${activeSession.currentBalance?.toFixed(2)}</span>
+          <span>${(activeSession.currentBalance ?? 0).toFixed(2)}</span>
         </div>
 
         <button 
-          onClick={() => { if(window.confirm("Encerrar a stream e salvar PnL?")) stopMutation.mutate() }} 
+          onClick={() => { 
+            if(window.confirm("Encerrar a stream e salvar PnL?")) {
+              stopMutation.mutate({ currentBalance: activeSession.currentBalance });
+            }
+          }} 
           className={styles.stopBtn}
           disabled={stopMutation.isPending}
         >
@@ -60,11 +73,10 @@ export default function SessionManager() {
     );
   }
 
-  // Estado: Sem Sessão (Setup)
+  // Estado: Sem Sessão
   return (
     <div className={styles.setupCard}>
       <h3 className={styles.setupTitle}>Configuração de Elite v2.0</h3>
-      
       <div className={styles.inputGroup}>
         <label>Nome da Sessão</label>
         <input 
@@ -73,7 +85,6 @@ export default function SessionManager() {
           onChange={(e) => setTitle(e.target.value)} 
         />
       </div>
-
       <div className={styles.inputGroup}>
         <label>Saldo Inicial ($)</label>
         <input 
@@ -83,7 +94,6 @@ export default function SessionManager() {
           onChange={(e) => setInitialBalance(e.target.value)} 
         />
       </div>
-
       <button 
         className={styles.startBtn}
         onClick={() => startMutation.mutate({ title, initialBalance: parseFloat(initialBalance) || 0 })}

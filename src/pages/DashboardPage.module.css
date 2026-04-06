@@ -1,3 +1,91 @@
-.page { display: flex; flex-direction: column; gap: 2rem; }
-.header h1 { margin: 0; font-size: 2rem; color: #f8fafc; }
-.header p { margin: 0.5rem 0 0 0; color: #94a3b8; }
+.page {
+    padding: 2rem 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 80px); /* Ocupa a altura toda menos a navbar */
+  }
+  
+  /* =========================================
+     ESTADO OFFLINE (Hero Section)
+     ========================================= */
+  .offlineHero {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5rem;
+    height: 70vh; /* Centra perfeitamente no ecrã */
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .welcomeText {
+    flex: 1;
+    max-width: 500px;
+  }
+  
+  .welcomeText h1 {
+    font-size: 3.5rem;
+    color: #f8fafc;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    letter-spacing: -1px;
+  }
+  
+  .welcomeText p {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    line-height: 1.6;
+  }
+  
+  .setupWrapper {
+    flex: 1;
+    max-width: 450px;
+    /* Uma leve sombra para dar destaque ao formulário de setup */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border-radius: 12px;
+  }
+  
+  /* =========================================
+     ESTADO ONLINE (Header do Dashboard)
+     ========================================= */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* Alinha o texto com o botão de encerrar pela base */
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #1e293b;
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  .headerTitles h1 {
+    font-size: 2.25rem;
+    color: #f8fafc;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.5px;
+  }
+  
+  .headerTitles p {
+    color: #94a3b8;
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  /* Animações suaves */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  /* Responsividade para ecrãs menores */
+  @media (max-width: 968px) {
+    .offlineHero {
+      flex-direction: column;
+      text-align: center;
+      gap: 3rem;
+    }
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.5rem;
+    }
+  }

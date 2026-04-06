@@ -1,22 +1,20 @@
 import { Routes, Route, Link } from 'react-router-dom';
-import { useSession } from './context/SessionContext';
-import SessionManager from './features/sessions/components/SessionManager';
 import DashboardPage from './pages/DashboardPage';
 import SlotsPage from './pages/SlotsPage';
 import BonusHuntPage from './pages/BonusHuntPage';
 import SinglePlayerPage from './pages/SinglePlayerPage';
 import HistoryPage from './pages/HistoryPage';
 
-// 👇 A ÚNICA LINHA DO LUCIDE-REACT 👇
 import { LayoutDashboard, Disc, PlusSquare, Gamepad2, History } from 'lucide-react';
 
 export default function App() {
-  const { activeSession, isLoading } = useSession();
-
-  if (isLoading) return <div style={{ padding: '2rem', color: '#38bdf8' }}>A aquecer motores v2.0...</div>;
+  // 🚀 A App agora é super leve! Não precisa de verificar sessões.
+  // Deixamos essa inteligência para o DashboardPage e para as outras páginas.
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      
+      {/* NAVBAR LIMPÍSSIMA */}
       <nav style={{ 
         padding: '1rem 2rem', 
         background: 'rgba(0,0,0,0.3)', 
@@ -29,10 +27,13 @@ export default function App() {
         top: 0,
         zIndex: 100
       }}>
-        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#38bdf8', letterSpacing: '1px' }}>
+        
+        {/* Lado Esquerdo: Logo */}
+        <div style={{ fontWeight: 'bold', fontSize: '1.2rem', color: '#38bdf8', letterSpacing: '1px', width: '200px' }}>
           CASINO DASH v2.0
         </div>
         
+        {/* Centro: Links */}
         <div style={{ display: 'flex', gap: '2rem' }}>
           <Link to="/" style={navLinkStyle}><LayoutDashboard size={18}/> Dashboard</Link>
           <Link to="/slots" style={navLinkStyle}><PlusSquare size={18}/> Slots</Link>
@@ -41,24 +42,20 @@ export default function App() {
           <Link to="/bonus-hunt" style={navLinkStyle}><Disc size={18}/> Bonus Hunt</Link>
         </div>
 
-        <SessionManager />
+        {/* Lado Direito: Espaço vazio para manter o menu centrado na perfeição */}
+        <div style={{ width: '200px' }}></div>
       </nav>
 
-      <main style={{ flex: 1, padding: '2rem', maxWidth: '1400px', margin: '0 auto', width: '100%' }}>
-        {!activeSession ? (
-          <div style={{ textAlign: 'center', marginTop: '4rem' }}>
-            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Bem-vindo, João!</h2>
-            <p style={{ color: '#94a3b8', fontSize: '1.2rem' }}>Inicia uma sessão para começar a trackear os teus bónus em tempo real.</p>
-          </div>
-        ) : (
-          <Routes>
-            <Route path="/" element={<DashboardPage />} />
-            <Route path="/slots" element={<SlotsPage />} />
-            <Route path="/single-player" element={<SinglePlayerPage />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/bonus-hunt" element={<BonusHuntPage />} />
-          </Routes>
-        )}
+      {/* MAIN CONTENT: As rotas mandam aqui */}
+      {/* Removi o padding daqui para que o CSS do DashboardPage.module.css possa assumir o controlo */}
+      <main style={{ flex: 1, width: '100%' }}>
+        <Routes>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/slots" element={<SlotsPage />} />
+          <Route path="/single-player" element={<SinglePlayerPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/bonus-hunt" element={<BonusHuntPage />} />
+        </Routes>
       </main>
     </div>
   );
@@ -71,5 +68,6 @@ const navLinkStyle = {
   alignItems: 'center', 
   gap: '8px',
   fontSize: '0.9rem',
-  fontWeight: '500'
+  fontWeight: '500',
+  transition: 'color 0.2s ease'
 };
